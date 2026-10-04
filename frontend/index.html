@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SmartExam — NPTEL AI-Powered Practice & Exam Platform</title>
+  
+  <!-- Modern Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- KaTeX for pristine Math Rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  
+  <!-- Core Design System CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ================= Navigation Header ================= -->
+  <header class="app-navbar">
+    <div class="brand-wrapper" id="brandHomeBtn">
+      <div class="brand-icon">🎓</div>
+      <div>
+        <div class="brand-title">SmartExam AI</div>
+        <div style="font-size: 0.72rem; color: var(--text-muted);">NPTEL 2026 Master Practice Platform</div>
+      </div>
+      <span class="brand-badge">NPTEL 2026</span>
+    </div>
+
+    <nav class="nav-tabs-wrapper">
+      <button class="nav-tab-btn active" data-tab="tab-exam" id="navExamTab">
+        <span>📝</span> Exam & Practice
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-bank" id="navBankTab">
+        <span>📚</span> Question Bank
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-finder" id="navFinderTab">
+        <span>🔍</span> AI Answer Finder
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-analytics" id="navAnalyticsTab">
+        <span>📊</span> Analytics & Mastery
+      </button>
+      <button class="nav-tab-btn" data-tab="tab-ingest" id="navIngestTab">
+        <span>📥</span> Ingestion & Ingest
+      </button>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="icon-btn" id="calcToggleBtn" title="Scientific Calculator">🧮</button>
+      <button class="icon-btn" id="soundToggleBtn" title="Toggle Sound FX">🔊</button>
+      <button class="icon-btn" id="themeToggleBtn" title="Toggle Light/Dark Theme">🌙</button>
+    </div>
+  </header>
+
+  <!-- ================= Main Application Container ================= -->
+  <main class="main-content">
+
+    <!-- ================= TAB 1: EXAM & PRACTICE HUB ================= -->
+    <section class="tab-pane active" id="tab-exam">
+      
+      <!-- Exam Configurator View (Shown when not in active test) -->
+      <div id="examConfigView">
+        <div class="hero-banner">
+          <div class="hero-text">
+            <h1><span>⚡</span> Live NPTEL Exam & Practice Simulator</h1>
+            <p>Practice standard MCQ, MSQ, and Numerical questions from your ML and OOSD assignments. Choose between full timed exam simulation or step-by-step instant feedback mode.</p>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat-pill">
+              <span>Total Bank</span>
+              <strong id="heroTotalQuestions">144</strong>
+            </div>
+            <div class="hero-stat-pill">
+              <span>Courses</span>
+              <strong>OOSD & ML</strong>
+            </div>
+            <div class="hero-stat-pill">
+              <span>Accuracy</span>
+              <strong id="heroAccuracyStat">0%</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="config-card">
+          <h2 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 16px;">Configure Your Session</h2>
+          <div class="config-grid">
+            
+            <div class="form-group">
+              <label for="courseSelect">Course</label>
+              <select id="courseSelect" class="custom-select">
+                <option value="ALL">All Courses (OOSD + ML)</option>
+                <option value="OOSD">OOSD 2026 (Object Oriented Design)</option>
+                <option value="ML">Machine Learning (2026 Assignments)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="weekSelect">Assignment / Week</label>
+              <select id="weekSelect" class="custom-select">
+                <option value="ALL">All Weeks / Complete Syllabus</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="modeSelect">Mode</label>
+              <select id="modeSelect" class="custom-select">
+                <option value="PRACTICE">Instant Practice (Immediate feedback & solutions)</option>
+                <option value="EXAM">Official Exam Mode (Timer, Palette & Grading at End)</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="orderSelect">Question Order</label>
+              <select id="orderSelect" class="custom-select">
+                <option value="SEQUENTIAL">Sequential Order (By Assignment)</option>
+                <option value="SHUFFLE">Random Shuffle</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="countSelect">Question Count</label>
+              <select id="countSelect" class="custom-select">
+                <option value="10">10 Questions (Quick Quiz)</option>
+                <option value="25" selected>25 Questions (Standard Practice)</option>
+                <option value="50">50 Questions (Half Mock)</option>
+                <option value="ALL">All Questions in Selection</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <button class="btn-primary" id="startExamBtn" style="height: 48px; width: 100%;">
+                <span>🚀</span> Start Session
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Quick Access Pre-sets -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+          <div class="config-card" style="margin-bottom: 0; cursor: pointer; transition: 0.2s;" id="quickOosdBtn">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span class="badge-tag topic">OOSD 2026</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">12 Assignments</span>
+            </div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">OOSD Complete 123-Question Bank</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Practice Design Patterns (Bridge, Decorator, Proxy, Facade), UML, and OOP fundamentals.</p>
+          </div>
+
+          <div class="config-card" style="margin-bottom: 0; cursor: pointer; transition: 0.2s;" id="quickMlBtn">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span class="badge-tag type">ML 2026</span>
+              <span style="font-size: 0.8rem; color: var(--text-muted);">Weeks 2 to 8</span>
+            </div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">Machine Learning Numerical & MSQs</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Backpropagation updates, Naive Bayes parameter estimation, Gini index, and SVM slack variables.</p>
+          </div>
+
+          <div class="config-card" style="margin-bottom: 0; cursor: pointer; transition: 0.2s;" id="quickAuditBtn">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span class="badge-tag marks" style="background: rgba(245, 158, 11, 0.15); color: #fbbf24; border-color: rgba(245, 158, 11, 0.3);">Audit Flags</span>
+              <span style="font-size: 0.8rem; color: #fbbf24;">⚠️ Verified Issues</span>
+            </div>
+            <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">Answer-Key Conflict Challenge</h3>
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">Inspect questions where the assignment key has discrepancies or mathematical edge cases.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Exam & Practice Workspace (Split Question + Palette) -->
+      <div class="exam-stage-container" id="examStageView">
+        
+        <!-- Top Toolbar -->
+        <div class="exam-top-bar">
+          <div class="exam-info-header">
+            <button class="btn-secondary" id="exitExamBtn" style="padding: 6px 12px; font-size: 0.85rem;">
+              <span>←</span> Exit
+            </button>
+            <div class="exam-title-badge" id="examCurrentTitle">Session in Progress</div>
+            <span class="mode-tag practice" id="examModePill">Practice Mode</span>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 12px;">
+            <div class="exam-timer-wrapper" id="examTimerDisplay">
+              <span>⏱</span> <span id="timerDigits">00:00</span>
+            </div>
+            <button class="btn-danger" id="submitExamBtn" style="padding: 8px 16px;">
+              Finish & Submit
+            </button>
+          </div>
+        </div>
+
+        <!-- Question Body + Palette Sidebar -->
+        <div class="exam-grid-layout">
+          
+          <!-- Left: Main Question Area -->
+          <div class="question-card" id="questionCardMain">
+            
+            <div class="question-meta-row">
+              <div class="meta-tags">
+                <span class="badge-tag" id="qNumberBadge">Question 1 of 25</span>
+                <span class="badge-tag type" id="qTypeBadge">MCQ</span>
+                <span class="badge-tag topic" id="qTopicBadge">Topic</span>
+                <span class="badge-tag marks" id="qMarksBadge">1 Mark</span>
+              </div>
+              <div style="font-size: 0.82rem; color: var(--text-muted);" id="qSourceBadge">
+                Source: Assignment
+              </div>
+            </div>
+
+            <!-- Stem / Question Text with LaTeX rendering -->
+            <div class="question-body" id="questionStemText">
+              Loading question...
+            </div>
+
+            <!-- Optional Image Box -->
+            <div class="question-image-box" id="questionImageBox" style="display: none;">
+              <img id="questionImageElem" src="" alt="Question Diagram">
+            </div>
+
+            <!-- Options Area (Radio for MCQ, Checkbox for MSQ) -->
+            <div class="options-container" id="questionOptionsList">
+              <!-- Dynamically populated options -->
+            </div>
+
+            <!-- Numeric Input Area (for NUMERIC question type) -->
+            <div class="numeric-input-card" id="questionNumericArea" style="display: none;">
+              <label for="numericAnswerInput">Enter Numerical Answer (Decimal or Integer):</label>
+              <div class="numeric-row">
+                <input type="number" step="any" id="numericAnswerInput" class="numeric-input-field" placeholder="0.00">
+                <span style="font-size: 0.85rem; color: var(--text-muted);" id="numericToleranceNotice">Accepted tolerance applies</span>
+              </div>
+            </div>
+
+            <!-- Action Controls Row -->
+            <div class="question-controls">
+              <div class="controls-left">
+                <button class="btn-secondary" id="btnPrevQ">← Previous</button>
+                <button class="btn-mark-review" id="btnMarkReview">
+                  <span>🔖</span> Mark for Review
+                </button>
+                <button class="btn-secondary" id="btnClearResponse">Clear Choice</button>
+              </div>
+
+              <div class="controls-right">
+                <!-- Practice Mode buttons -->
+                <button class="btn-primary" id="btnCheckAnswer" style="background: linear-gradient(135deg, #10b981, #059669);">
+                  <span>✓</span> Check Answer
+                </button>
+                <button class="btn-secondary" id="btnGenVariant" title="Generate New Variant of this problem with recalculated values">
+                  <span>🎲</span> New Variant
+                </button>
+                <button class="btn-secondary" id="btnAiExplain" title="AI Step-by-Step Explanation">
+                  <span>🤖</span> AI Tutor
+                </button>
+                <button class="btn-primary" id="btnNextQ">Next →</button>
+
+              </div>
+            </div>
+
+            <!-- Practice Mode Instant Feedback Box -->
+            <div class="practice-feedback-box" id="practiceFeedbackBox">
+              <div class="feedback-status-banner">
+                <div class="status-badge correct" id="feedbackStatusBadge">
+                  <span>✓</span> Correct! (+1 Mark)
+                </div>
+                <div style="font-size: 0.8rem; color: var(--text-muted);" id="feedbackConfidence">
+                  AI Confidence: 99%
+                </div>
+              </div>
+              <div class="explanation-content" id="feedbackExplanationText">
+                Step-by-step solution will be displayed here.
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Right: NPTEL Question Palette -->
+          <aside class="palette-sidebar">
+            <div class="palette-title">
+              <span>Question Palette</span>
+              <span style="font-size: 0.8rem; color: var(--accent-sky);" id="paletteCountProgress">1 / 25</span>
+            </div>
+
+            <div class="palette-legend">
+              <div class="legend-item"><span class="legend-dot answered"></span> Answered</div>
+              <div class="legend-item"><span class="legend-dot marked"></span> Marked</div>
+              <div class="legend-item"><span class="legend-dot marked-answered"></span> Marked & Ans</div>
+              <div class="legend-item"><span class="legend-dot not-answered"></span> Not Ans</div>
+              <div class="legend-item"><span class="legend-dot not-visited"></span> Not Visited</div>
+            </div>
+
+            <div class="palette-grid" id="paletteGrid">
+              <!-- 1, 2, 3... buttons dynamically populated -->
+            </div>
+
+            <div style="margin-top: 14px; border-top: 1px solid var(--border-subtle); padding-top: 12px;">
+              <button class="btn-secondary" id="paletteCalcBtn" style="width: 100%; justify-content: center;">
+                <span>🧮</span> Scientific Calculator
+              </button>
+            </div>
+          </aside>
+
+        </div>
+
+      </div>
+
+      <!-- Exam Result / Score Review Stage -->
+      <div id="examResultView" style="display: none;">
+        <div class="result-card">
+          <div class="result-hero">
+            <div class="result-score-badge">
+              <div class="score-val" id="resultScoreValue">0 / 0</div>
+              <div class="score-label">Total Marks</div>
+            </div>
+            <h2 style="font-size: 1.8rem; font-weight: 800; margin-bottom: 6px;" id="resultGreeting">Assessment Complete!</h2>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;" id="resultSummaryText">
+              Review your question responses, detailed solutions, and error breakdown below.
+            </p>
+          </div>
+
+          <div class="result-stats-row">
+            <div class="stat-box">
+              <span class="val" id="resAccuracyVal">0%</span>
+              <span class="lbl">Accuracy</span>
+            </div>
+            <div class="stat-box">
+              <span class="val" style="color: var(--success);" id="resCorrectVal">0</span>
+              <span class="lbl">Correct</span>
+            </div>
+            <div class="stat-box">
+              <span class="val" style="color: var(--error);" id="resWrongVal">0</span>
+              <span class="lbl">Incorrect</span>
+            </div>
+            <div class="stat-box">
+              <span class="val" style="color: var(--text-muted);" id="resSkippedVal">0</span>
+              <span class="lbl">Skipped</span>
+            </div>
+            <div class="stat-box">
+              <span class="val" id="resTimeTakenVal">00:00</span>
+              <span class="lbl">Time Taken</span>
+            </div>
+          </div>
+
+          <div class="result-actions-row">
+            <button class="btn-primary" id="resRetryWrongBtn">
+              <span>🔁</span> Retry Wrong Questions
+            </button>
+            <button class="btn-secondary" id="resReviewAllBtn">
+              <span>📋</span> Detailed Solutions Review
+            </button>
+            <button class="btn-secondary" id="resNewSessionBtn">
+              <span>🏠</span> Back to Exam Hub
+            </button>
+          </div>
+
+          <!-- Detailed Itemized Review List -->
+          <div id="resultDetailsList" style="margin-top: 36px; display: none;">
+            <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 10px;">
+              Question-by-Question Solution Breakdown
+            </h3>
+            <div class="questions-list" id="resultQuestionsContainer">
+              <!-- Dynamically populated with answers and solutions -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= TAB 2: QUESTION BANK EXPLORER ================= -->
+    <section class="tab-pane" id="tab-bank">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h1><span>📚</span> Master Question Bank (144 Questions)</h1>
+          <p>Search, filter, and inspect every question across OOSD and Machine Learning. Filter by course, week, topic, difficulty, or question type.</p>
+        </div>
+        <div class="hero-stats">
+          <button class="btn-primary" id="addNewQuestionBtn">
+            <span>+</span> Add Custom Question
+          </button>
+        </div>
+      </div>
+
+      <div class="bank-filter-bar">
+        <div class="search-input-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="bankSearchInput" placeholder="Search keywords (e.g. 'Naive Bayes', 'Decorator', 'Recall', 'Gini')...">
+        </div>
+
+        <select id="bankCourseFilter" class="custom-select" style="min-width: 150px;">
+          <option value="ALL">All Courses</option>
+          <option value="OOSD">OOSD</option>
+          <option value="ML">Machine Learning</option>
+        </select>
+
+        <select id="bankTypeFilter" class="custom-select" style="min-width: 130px;">
+          <option value="ALL">All Types</option>
+          <option value="MCQ">MCQ</option>
+          <option value="MSQ">MSQ</option>
+          <option value="NUMERIC">Numeric</option>
+        </select>
+
+        <select id="bankTopicFilter" class="custom-select" style="min-width: 180px;">
+          <option value="ALL">All Topics</option>
+        </select>
+      </div>
+
+      <div class="questions-list" id="bankQuestionsList">
+        <!-- Rendered by app.js -->
+      </div>
+    </section>
+
+    <!-- ================= TAB 3: AI ANSWER FINDER & AUDIT ================= -->
+    <section class="tab-pane" id="tab-finder">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h1><span>🔍</span> AI Answer Finder & Audit Engine</h1>
+          <p>Multi-step consensus verification pipeline. Searches academic literature, evaluates independent step-by-step mathematical reasoning, and audits official assignment answer keys to flag known errors.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat-pill">
+            <span>Audit Conflicts</span>
+            <strong style="color: var(--warning);" id="auditConflictCount">3 Detected</strong>
+          </div>
+          <div class="hero-stat-pill">
+            <span>Verified Match</span>
+            <strong style="color: var(--success);" id="auditMatchCount">141 Matched</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick interactive single-question verification tester -->
+      <div class="config-card">
+        <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px;">Run Real-time AI Answer Verification</h3>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <select id="finderQuestionSelect" class="custom-select" style="flex-grow: 1;">
+            <!-- Populated with all questions -->
+          </select>
+          <button class="btn-primary" id="runFinderSingleBtn">
+            <span>⚡</span> Verify with AI Consensus
+          </button>
+        </div>
+
+        <!-- Verification Pipeline Progress Log -->
+        <div id="finderLivePipeline" style="display: none; margin-top: 18px; background: rgba(0,0,0,0.3); border-radius: var(--radius-sm); padding: 16px; border: 1px solid var(--border-subtle); font-family: 'Fira Code', monospace; font-size: 0.88rem;">
+          <div style="color: var(--accent-sky); margin-bottom: 8px;">[Pipeline Initialized] Building search queries...</div>
+          <div id="pipelineLogOutput"></div>
+        </div>
+      </div>
+
+      <!-- Answer Key Audit Report Section -->
+      <div style="margin-top: 24px;">
+        <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+          <span>⚠️</span> Answer-Key Audit Report (Flagged Assignment Key Discrepancies)
+        </h3>
+        <p style="color: var(--text-secondary); font-size: 0.92rem; margin-bottom: 14px;">
+          Our Answer Finder isolated discrepancies where the official assignment sheet solutions contain mathematical or wording conflicts.
+        </p>
+
+        <div class="audit-table-wrap">
+          <table class="audit-table">
+            <thead>
+              <tr>
+                <th>Question ID</th>
+                <th>Course / Week</th>
+                <th>Topic</th>
+                <th>Stored Key</th>
+                <th>AI Consensus</th>
+                <th>Status</th>
+                <th>Reasoning / Issue</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="auditTableBody">
+              <!-- Rendered by app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= TAB 4: ANALYTICS & MASTERY ================= -->
+    <section class="tab-pane" id="tab-analytics">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h1><span>📊</span> Learning Analytics & Spaced Repetition</h1>
+          <p>Track your topic-level mastery, pace, accuracy trends, and review questions scheduled under the Leitner spaced repetition system.</p>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat-pill">
+            <span>Leitner Queue</span>
+            <strong style="color: var(--accent-sky);" id="spacedRepCount">0 Due</strong>
+          </div>
+          <div class="hero-stat-pill">
+            <span>Overall Score</span>
+            <strong id="analyticsOverallScore">0%</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid of Analytics Cards -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
+        
+        <!-- Topic Mastery Heatmap / Bars -->
+        <div class="config-card" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 16px;">Topic Proficiency Breakdown</h3>
+          <div id="topicProficiencyList" style="display: flex; flex-direction: column; gap: 14px;">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- Leitner Spaced Repetition Box -->
+        <div class="config-card" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 16px;">Spaced Repetition Flashbox</h3>
+          <p style="color: var(--text-secondary); font-size: 0.88rem; margin-bottom: 16px;">
+            Questions you get wrong are scheduled for review after 1, 3, and 7 days.
+          </p>
+
+          <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 20px;">
+            <div class="stat-box">
+              <span class="val" id="box1Count">0</span>
+              <span class="lbl">Box 1 (Daily)</span>
+            </div>
+            <div class="stat-box">
+              <span class="val" id="box2Count">0</span>
+              <span class="lbl">Box 2 (3-Day)</span>
+            </div>
+            <div class="stat-box">
+              <span class="val" id="box3Count">0</span>
+              <span class="lbl">Box 3 (7-Day)</span>
+            </div>
+            <div class="stat-box">
+              <span class="val" id="box4Count" style="color: var(--success);">0</span>
+              <span class="lbl">Mastered</span>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="btnStudySpacedQueue" style="width: 100%; justify-content: center;">
+            <span>🔁</span> Practice Due Questions Now
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= TAB 5: INGESTION & GENERATOR ================= -->
+    <section class="tab-pane" id="tab-ingest">
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h1><span>📥</span> Assignment Ingestion & Variant Generator</h1>
+          <p>Upload new PDF/DOCX assignment sheets to automatically parse and extract questions, or generate new numerical variants using LLM simulation.</p>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
+        
+        <!-- Drag & Drop Ingestion Card -->
+        <div class="config-card" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 14px;">Upload Assignment (PDF / DOCX / HTML)</h3>
+          
+          <div id="dropZoneArea" style="border: 2px dashed var(--border-strong); border-radius: var(--radius-md); padding: 36px 20px; text-align: center; cursor: pointer; transition: 0.2s; background: var(--surface-glass);">
+            <div style="font-size: 2.4rem; margin-bottom: 10px;">📄</div>
+            <div style="font-weight: 700; font-size: 1.05rem; margin-bottom: 4px;">Drag and drop assignment file here</div>
+            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 14px;">Supports PDF, DOCX, and HTML quizzes</div>
+            <input type="file" id="fileUploadInput" accept=".pdf,.docx,.html" style="display: none;">
+            <button class="btn-secondary" id="browseFileBtn" type="button">Browse Local File</button>
+          </div>
+
+          <div id="uploadStatusBox" style="margin-top: 14px; display: none; font-size: 0.9rem; padding: 12px; border-radius: var(--radius-sm); background: var(--surface-elevated); border: 1px solid var(--border-subtle);">
+            <!-- Status message -->
+          </div>
+        </div>
+
+        <!-- Export & Pre-loaded Materials Card -->
+        <div class="config-card" style="margin-bottom: 0;">
+          <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 14px;">Export & Offline Packages</h3>
+          
+          <div style="display: flex; flex-direction: column; gap: 12px;">
+            <button class="btn-secondary" id="exportJsonBtn" style="justify-content: space-between;">
+              <span><span>💾</span> Export Complete Question Bank (JSON)</span>
+              <span>144 Items</span>
+            </button>
+
+            <button class="btn-secondary" id="exportPrintBtn" style="justify-content: space-between;">
+              <span><span>🖨️</span> Generate Printable Mock Paper (HTML/PDF)</span>
+              <span>Clean Print</span>
+            </button>
+
+            <div style="margin-top: 10px; border-top: 1px solid var(--border-subtle); padding-top: 14px;">
+              <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-bottom: 8px;">SOURCE ASSIGNMENT FILES (LOCAL)</div>
+              <ul style="font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; list-style: square; padding-left: 20px;">
+                <li>OOSD Assignments 1–12 (123 Questions Loaded)</li>
+                <li>ML Assignment 2 (Regression, Lasso/Ridge, k-NN)</li>
+                <li>ML Assignment 4 (SVM Margins, Majority Function)</li>
+                <li>ML Assignment 5 (Backprop, Parameter Count, MLE)</li>
+                <li>ML Assignment 6 (Recall, CV Folds, Bagging, ROC)</li>
+                <li>ML Assignment 7 (Decision Trees, Gini Impurity)</li>
+                <li>ML Assignment 8 (Naive Bayes Parameters, AdaBoost)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================= Scientific Calculator Modal ================= -->
+  <div class="modal-backdrop" id="calcModal">
+    <div class="modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 1.05rem; font-weight: 800;">Scientific Calculator</h3>
+        <button class="icon-btn" id="closeCalcBtn" style="width: 30px; height: 30px;">✕</button>
+      </div>
+
+      <div class="calc-display" id="calcDisplay">0</div>
+
+      <div class="calc-grid">
+        <button class="calc-btn op" data-calc="sin">sin</button>
+        <button class="calc-btn op" data-calc="cos">cos</button>
+        <button class="calc-btn op" data-calc="tan">tan</button>
+        <button class="calc-btn op" data-calc="clear">AC</button>
+
+        <button class="calc-btn op" data-calc="ln">ln</button>
+        <button class="calc-btn op" data-calc="log">log</button>
+        <button class="calc-btn op" data-calc="sqrt">√</button>
+        <button class="calc-btn op" data-calc="/">÷</button>
+
+        <button class="calc-btn" data-calc="7">7</button>
+        <button class="calc-btn" data-calc="8">8</button>
+        <button class="calc-btn" data-calc="9">9</button>
+        <button class="calc-btn op" data-calc="*">×</button>
+
+        <button class="calc-btn" data-calc="4">4</button>
+        <button class="calc-btn" data-calc="5">5</button>
+        <button class="calc-btn" data-calc="6">6</button>
+        <button class="calc-btn op" data-calc="-">−</button>
+
+        <button class="calc-btn" data-calc="1">1</button>
+        <button class="calc-btn" data-calc="2">2</button>
+        <button class="calc-btn" data-calc="3">3</button>
+        <button class="calc-btn op" data-calc="+">+</button>
+
+        <button class="calc-btn" data-calc="0">0</button>
+        <button class="calc-btn" data-calc=".">.</button>
+        <button class="calc-btn equal" data-calc="=">=</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= AI Tutor Step-by-Step Modal ================= -->
+  <div class="modal-backdrop" id="aiTutorModal">
+    <div class="modal-card" style="max-width: 600px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+        <h3 style="font-size: 1.1rem; font-weight: 800; display: flex; align-items: center; gap: 8px;">
+          <span>🤖</span> AI Tutor — Step-by-Step Breakdown
+        </h3>
+        <button class="icon-btn" id="closeTutorBtn" style="width: 30px; height: 30px;">✕</button>
+      </div>
+
+      <div id="aiTutorQuestionTitle" style="font-weight: 700; font-size: 0.95rem; margin-bottom: 12px; color: var(--accent-sky);">
+        Question Topic
+      </div>
+
+      <div id="aiTutorContent" style="font-size: 0.95rem; line-height: 1.65; color: var(--text-secondary); max-height: 420px; overflow-y: auto; padding-right: 6px;">
+        Thinking...
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio Synthesizer -->
+  <script src="audio.js"></script>
+
+  <!-- Application Logic -->
+  <script src="app.js"></script>
+</body>
+</html>

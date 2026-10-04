@@ -1,0 +1,76 @@
+1. Feature and Class level. 
+Naive Bayes assumes that the features are conditionally independent given 
+the class label. 
+Mathematically: 
+𝑃(𝑋1, 𝑋2, … , 𝑋𝑛 ∣ 𝑌) = ∏ 𝑃
+𝑛
+𝑖=1
+(𝑋𝑖 ∣ 𝑌) 
+ 
+where: 
+• 𝑋𝑖= features  
+• 𝑌= class label  
+So the statement becomes: 
+The Naive Bayes classifier makes the assumption that the features are 
+independent given the class labels. 
+2. The Naive Bayes classifier can produce a non-linear decision boundary, 
+depending on the probability distributions assumed for the features. 
+For example, in Gaussian Naive Bayes, the class-conditional probabilities are 
+modeled using Gaussian distributions. When different classes have different 
+variances, the resulting decision boundary can be quadratic (non-linear). 
+3. Class Imbalance 
+Explanation 
+In One-vs-Rest (OvR) multi-class classification, a separate classifier is trained 
+for each class: 
+• Class 1 vs. all other classes  
+• Class 2 vs. all other classes  
+• Class 3 vs. all other classes  
+• etc.  
+This can create a class imbalance problem, because the positive class may 
+contain far fewer samples than the combined negative classes. 
+For example, with 5 classes having 100 samples each: 
+• Class 1 → 100 positive vs. 400 negative  
+• Class 2 → 100 positive vs. 400 negative 
+4. Answer: 9 
+We have: 
+𝑌= Boolean → 2 classes  
+𝑋1= categorical with 3 values  
+𝑋2= continuous and normally distributed  
+For a Naive Bayes model: 
+1. Prior probability of 𝒀 
+Since 𝑌is Boolean, we need only 1 parameter: 
+𝑃(𝑌 = 1) 
+ 
+(The probability of the other class is 1 − 𝑃(𝑌 = 1).) 
+2. Conditional probabilities for 𝑿𝟏 
+For each of the 2 values of 𝑌, 𝑋1has 3 possible values. 
+A categorical variable with 3 values requires 3 − 1 = 2independent parameters 
+per class: 
+2 × 2 = 4 
+ 
+3. Gaussian parameters for 𝑿𝟐 
+For each value of 𝑌, a Gaussian distribution requires: 
+Mean 𝜇 
+Variance 𝜎2 
+So: 
+2 parameters × 2 classes = 4 
+ 
+Total 1+4+4=9 
+5. Answer: Increased 
+In boosting algorithms such as AdaBoost, data points that are misclassified by the 
+current weak learner are given higher weights in the next iteration. 
+This forces the next learner to pay more attention to the difficult or incorrectly 
+classified examples. 
+So, as training progresses: 
+ 
+ 
+6. Option 2 and 3 
+•  Decreasing 𝑚→ each tree sees fewer randomly selected features → trees become 
+less correlated with each other.  
+•  Increasing 𝑚→ each tree has more features to choose from → it generally makes 
+stronger individual trees. 
+
+7. Option D 
+8. None of them can be inferred. 
+ 
+ 

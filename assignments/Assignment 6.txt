@@ -1,0 +1,48 @@
+1. Recall is calculated as: 
+Recall = 𝑇𝑃
+𝑇𝑃 + 𝐹𝑁 
+ 
+From the confusion matrix: 
+• 𝑇𝑃 = 6 
+• 𝐹𝑁 = 3 
+Therefore, 
+Recall = 6
+6 + 3 = 6
+9 = 0.67 
+ 
+Correct answer: 0.67 
+2. Classifier A has 0% accuracy → it makes no correct predictions.  
+Classifier B has 50% accuracy → it makes correct predictions half the time.  
+Therefore, B is more useful. 
+3. A larger 𝑘is not always better in 𝑘-fold cross-validation. 
+Larger 𝑘→ more training data per fold, but higher computational cost and 
+potentially higher variance.  
+Smaller 𝑘(e.g., 5 or 10) often provides a good balance between computational 
+efficiency and reliable performance estimation. So the answer is False. 
+4. For 20-fold cross-validation: 
+Training size = 19
+20 × 1000 = 950 
+ 
+Each fold contains 1000/20 = 50samples for validation, so the remaining 950 
+samples are used for training. 
+ Correct answer: 950 
+5.  
+ 
+
+6. False Positive rate and True Positive Rate. 
+7. A) It helps reduce variance 
+B) If the parameters of the resultant classifiers are fully correlated, then bagging 
+is inefficient. 
+Why? 
+Bagging (Bootstrap Aggregating) primarily reduces variance by combining 
+predictions from multiple models.  
+If the classifiers are highly correlated, they make similar errors, so averaging 
+them provides little benefit.  
+Bagging generally does not reduce bias. 
+8. Correct answer: Stacking, because each classifier is trained on all of the 
+available data 
+Reason: With limited training data, stacking is preferable because different base 
+classifiers can learn from the entire available dataset, allowing you to exploit 
+different learning algorithms without splitting the data among models. 
+9. Option 3 and 4 
+ 

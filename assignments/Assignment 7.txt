@@ -1,0 +1,97 @@
+Assignment 7: 
+1. Ans: axis parallel hyper-rectangles 
+Decision trees recursively split the input space using threshold-based rules such 
+as 𝑥𝑗 < 𝑐. These splits are typically axis-parallel, producing rectangular regions 
+(hyper-rectangles in higher dimensions). 
+2. Ans: Option 1 and 2 
+  Setting a threshold for the decrease in sum of squared errors (SSE) prevents 
+insignificant splits, thereby limiting tree growth.   
+The threshold controls model complexity, so it can improve or worsen predictive 
+performance depending on the chosen value.  
+The method is computationally feasible and is commonly used as a stopping 
+criterion. 
+ 
+3. Ans: Option 2 and 3 
+As a decision tree continues to grow: 
+Bias decreases → A deeper tree is more flexible and can fit the training data 
+better.  
+Variance increases → The deeper tree becomes more sensitive to the particular 
+training data and may overfit.  
+So, the bias–variance trade-off is: 
+Tree depth ↑ → Bias ↓, Variance ↑ 
+4. Option:2 
+Left branch: 
+𝑟𝑒𝑠𝑝𝑜𝑛𝑠𝑒𝑙𝑒𝑓𝑡 = 5 + 7 + 9.6
+3 = 21.6
+3 = 7.2  
+ 
+Right branch: 
+𝑟𝑒𝑠𝑝𝑜𝑛𝑠𝑒𝑟𝑖𝑔ℎ𝑡 = 8.7 + 9.8 + 10.5 + 11
+4 = 40
+4 = 10  
+ 
+After collapsing the node, all 7 data points are in one node: 
+ 
+5. Option D 
+Sort the data by feature₁: 
+ 
+feature₁ 
+ 
+ 
+output 
+11.7 a 
+
+Sort the data by feature₁: 
+ 
+feature₁ 
+ 
+ 
+output 
+12.8 a 
+13.9 a 
+15.3 a 
+16.8 b 
+16.9 b 
+17.2 a 
+17.5 b 
+19.1 b 
+23.6  b 
+The candidate split 16.05 lies between: 
+15.3  (𝑎) and 16.8  (𝑏) 
+ 
+So the split gives: 
+• Left: all 4 a values  
+• Right: all 5 b values plus the later a at 17.2  
+Wait—there is an important detail: because 17.2 is a, this is not a perfect split. 
+Let's calculate the information gain for the candidates. The best split is actually: 
+17.35 
+because it separates the data as: 
+• Left: 5 a + 1 b  
+• Right: 4 b  
+This produces the highest information gain among the given choices. 
+ 
+6. Using the weighted Gini index: 
+ 
+Split point Weighted Gini 
+172.6 0.2857 
+176.35 0.3200 
+
+Split point Weighted Gini 
+178.45 0.4167 
+185.4 0.3750 
+Since lower Gini impurity is better, the minimum is: 
+0.2857  
+ 
+at 172.6. 
+ 
+7. Option 1 and 4 
+A separate "Missing" category is appropriate when the fact that a value is 
+missing is meaningful information in itself. 
+• Option 1: Missingness indicates an unusually urgent situation → meaningful.  
+• Option 4: Missingness indicates the patient was considered too urgent for the 
+normal process → meaningful.  
+• Option 2: Coffee spilled on the records → accidental/random missingness → not 
+meaningful.  
+• Option 3: Records were destroyed in a fire → accidental data loss → not 
+meaningful.  
+ 

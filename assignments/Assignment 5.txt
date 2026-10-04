@@ -1,0 +1,143 @@
+Assignment 5 
+ 
+1. The graph shows a nonlinear increasing curve that becomes steeper as 
+increases. This is characteristic of an exponential model. 
+The appropriate model is: 
+ 
+But note: among the given options, the notation in the image appears to use xw. 
+Since the curve is convex upward and rapidly increasing, the intended choice is 
+ 
+Answer: 3 
+2. For a neural network with: 
+5 input variables  
+1 hidden layer with 3 neurons  
+1 output neuron for binary classification  
+Bias terms counted as parameters  
+Step 1: Input → Hidden layer 
+Each of the 3 hidden neurons receives 5 inputs: 5*3 = 15 
+Each hidden neuron has one bias: 
+So: Total 3 bias. 15+3 = 18 
+Step 2: Hidden → Output layer 
+The output neuron receives 3 hidden-neuron outputs: 3 weights 
+Plus one output bias: So total 3+1= 4 
+Total parameters 18+4 =22 
+3. For a normal distribution with unknown mean µ, the maximum likelihood 
+estimator (MLE) of the mean is the sample mean: 
+                  
+Given marks: 25,55,64, 7,99. 
+Calculate the mean: 
+
+ 
+Therefore, the answer is 50  
+4. The weighted sum at the neuron is 
+ 
+ 
+The threshold activation is 
+ 
+Let's check all possible inputs: 
+ 
+Thus, the output is 1 whenever at least one input is 1. 
+ 
+So the answer is OR 
+5. For the 3–3–1 architecture, we have: 2 input variables + 1 bias node, 2 hidden 
+neurons + 1 bias node, Sigmoid activation at both layers. 
+Given: 
+ 
+And 
+
+ 
+Input:  
+ 
+Step 1: Hidden layer 
+Augmented input: 
+ 
+For hidden neuron 1: 
+ 
+For hidden neuron 2: 
+ 
+Step 2: Output layer 
+Including the bias: 
+ 
+Apply sigmoid: 
+ 
+So the answer is 0.7977. 
+6. The first statemen states that, The chances of overfitting decreases with increasing the 
+number of hidden nodes and increasing the number of hidden layers. Increasing 
+hidden nodes/layers increases the model's complexity and capacity, which can 
+increase the chance of overfitting, especially with limited training data. So it is 
+false. 
+Statement 2 states that, A neural network with one hidden layer can represent any 
+Boolean function given sufficient number of hidden units and appropriate activation 
+functions. A single hidden-layer neural network can represent any Boolean function 
+if enough hidden units and suitable activation functions are used. So it is True. 
+
+Statement 3 states that, Two hidden layer neural networks can represent any 
+continuous functions (within a tolerance) as long as the number of hidden units is 
+sufficient and appropriate activation functions are used. 
+This follows from the Universal Approximation Theorem. Neural networks with 
+sufficient hidden units can approximate continuous functions to an arbitrary desired 
+accuracy. So it is also True. 
+ 
+7. Given, 
+ 
+Where,  
+ 
+ 
+Step 1: Calculate the inner sigmoid, 
+ 
+Therefore, the input to the outer sigmoid is, 
+ 
+So, 
+ 
+Step 2: Differentiate with respect to  
+Using 
+ 
+we get 
+ 
+Therefore, the answer is 0.0746. 
+
+8. From the previous question we get, 
+  
+Given: 
+ 
+The network output was, 
+ 
+The network output was , 
+ 
+Using the squared-error loss, 
+ 
+the gradient is, 
+ 
+Now apply the backpropagation update: 
+ 
+So the answer is, 1.3119 
+ 
+9. The 1st statement is, ANN error surface has multiple local minima while SVM error 
+surface has only one minimum. 
+•  ANN training is generally non-convex, so it may have multiple local 
+minima/saddle points.  
+•  SVM optimization is a convex optimization problem, so it has a global optimum. 
+So it is True. 
+ 
+
+The 2nd statement is After training, an ANN might land on a different minimum each 
+time when initialized with random weights. 
+Different random initializations can lead gradient descent to different 
+solutions/minima. 
+So it is also True. 
+Statement 3 is saying, Some classes of functions cannot be learned by an ANN. An 
+SVM can learn a hyperplane for any kind of distribution.  
+The limitation described applies to a single-layer perceptron, not neural networks in 
+general. Also, a standard SVM learns a linear hyperplane; kernels can allow nonlinear 
+decision boundaries, but not literally "any kind of distribution." It is False. 
+ 
+The 4th Statement is, ANN uses gradient descent, while SVM uses convex 
+optimization solvers. 
+ANNs are commonly trained using gradient-based optimization such as 
+backpropagation + gradient descent, whereas SVM training is formulated as a convex 
+optimization problem. So it is True. 
+ 
+10. 1 and 3 is correct. 
+ 
+ 
+ 

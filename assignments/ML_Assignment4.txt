@@ -1,0 +1,59 @@
+
+
+This function is a majority function: it outputs 1 when at least two of the three inputs are 1.
+It is linearly separable, so a single perceptron can implement it.
+For example, choose:
+Then:
+0 or 1 true inputs → sum → False 
+2 or 3 true inputs → sum → True
+
+
+For an SVM, the margin condition is:
+
+If , the point is outside the margin and is not a support vector. 
+If , it lies on the margin → support vector. 
+If , it lies inside the margin or is misclassified → generally a support vector in soft-margin SVM. 
+Given:
+
+Therfore the answer is A.
+
+Although both linear SVM and the Perceptron can produce a linear decision boundary for linearly separable data, they optimize different objectives:
+Perceptron: Finds any separating hyperplane that correctly classifies the training data. 
+SVM: Finds the separating hyperplane that maximizes the margin between the two classes. 
+Therefore, even with the same linearly separable training data, they do not necessarily produce the same classifier.
+
+The linear regression model is:
+
+The fitted coefficients are:
+
+So the required format is,
+
+
+
+
+
+
+In L2-regularized linear regression (Ridge regression), increasing the regularization parameter increases the penalty on large coefficients:
+
+As increases, the model is increasingly penalized for having large coefficient values. Therefore, the absolute values of the coefficients (excluding the intercept) generally decrease toward zero.
+
+Total samples = 150 
+Training set = first 100 samples 
+Test set = remaining 50 samples 
+Features used = first 2 features 
+Classifier = L2-regularized Logistic Regression 
+One-vs-Rest strategy 
+
+The test accuracy is:
+
+
+  First 100 samples → training 
+  Last 50 samples → testing 
+  First 2 features only 
+  RBF kernel 
+  
+  One-vs-Rest 
+  No feature normalization 
+  
+
+Thus, the best test accuracy is 0.88 at 1.

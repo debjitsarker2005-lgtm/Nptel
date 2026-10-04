@@ -1,0 +1,15 @@
+# Vercel Deployment Exclusions
+venv/
+__pycache__/
+*.pyc
+.git/
+.vscode/
+.idea/
+scratch/
+extract_oosd.ps1
+extract_images.py
+inspect_assignments.py
+dump_ml_texts.py
+parse_oosd.py
+assignments/*.docx
+assignments/*.pdf
